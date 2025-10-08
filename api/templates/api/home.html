@@ -1,0 +1,78 @@
+{% extends "api/base.html" %}
+
+{% block title %}Home - Survey App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-clipboard-data text-primary" style="font-size: 4rem;"></i>
+                <h1 class="mt-4 mb-3">Welcome to Survey App</h1>
+                <p class="lead text-muted mb-4">
+                    Collect and manage survey responses with ease using KoboToolbox integration.
+                </p>
+                
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mt-5">
+                    <a href="{% url 'submit-survey' %}" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-pencil-square"></i> Submit a Survey
+                    </a>
+                    <a href="{% url 'view-submissions' %}" class="btn btn-outline-primary btn-lg px-5">
+                        <i class="bi bi-list-ul"></i> View Submissions
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-check-circle text-success" style="font-size: 2.5rem;"></i>
+                        <h5 class="card-title mt-3">Easy Submission</h5>
+                        <p class="card-text text-muted">
+                            Fill out surveys directly from your app without visiting KoboToolbox.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-database text-info" style="font-size: 2.5rem;"></i>
+                        <h5 class="card-title mt-3">Centralized Storage</h5>
+                        <p class="card-text text-muted">
+                            All responses are automatically synced and stored in your database.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-graph-up text-warning" style="font-size: 2.5rem;"></i>
+                        <h5 class="card-title mt-3">View & Analyze</h5>
+                        <p class="card-text text-muted">
+                            Browse all submissions with search and filter capabilities.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-info-circle text-primary"></i> How It Works
+                </h5>
+                <ol class="mb-0">
+                    <li class="mb-2">Click "Submit a Survey" to fill out the KoboToolbox form embedded in our app</li>
+                    <li class="mb-2">Your responses are submitted to KoboToolbox</li>
+                    <li class="mb-2">Data is automatically synced to our database</li>
+                    <li>View all submissions anytime in the "View Submissions" page</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

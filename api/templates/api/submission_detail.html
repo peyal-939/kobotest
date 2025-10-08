@@ -1,0 +1,105 @@
+{% extends "api/base.html" %}
+{% load custom_filters %}
+
+{% block title %}Survey Response{% endblock %}
+
+{% block extra_css %}
+<style>
+    .response-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .qa-item {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        background: white;
+        border-radius: 8px;
+        border-left: 4px solid #0d6efd;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .qa-item:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .question {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.75rem;
+    }
+    .answer {
+        font-size: 1.1rem;
+        color: #34495e;
+        line-height: 1.6;
+    }
+    .answer.empty {
+        color: #95a5a6;
+        font-style: italic;
+    }
+    .time-badge {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        border-radius: 6px;
+        display: inline-block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="response-container">
+    <!-- Back Button -->
+    <div class="mb-3">
+        <a href="{% url 'view-submissions' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <!-- Header Card -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body text-center">
+            <h4 class="mb-3">
+                <i class="bi bi-clipboard-check text-primary"></i> Survey Response
+            </h4>
+            <div class="time-badge">
+                <i class="bi bi-calendar-check text-primary"></i>
+                <strong>Submitted:</strong> {{ submission.date_submitted|date:"F d, Y" }} at {{ submission.date_submitted|time:"g:i A" }} (Asia/Dhaka)
+            </div>
+        </div>
+    </div>
+
+    <!-- Questions & Answers -->
+    {% for key, value in submission.data.items %}
+        {% if not key|slice:":1" == "_" and key != "formhub" and key != "__version__" and key != "meta" and key != "instanceID" and key|slice:":4" != "meta" and key|slice:":8" != "formhub/" and key != "start" and key != "end" and key != "Start" and key != "End" %}
+            <div class="qa-item">
+                <div class="question">
+                    {{ key|readable_field }}
+                </div>
+                <div class="answer {% if not value or value == '' %}empty{% endif %}">
+                    {% if value and value != "" %}
+                        {% if value|is_list %}
+                            {% for item in value %}
+                                <span class="badge bg-primary me-2 mb-1" style="font-size: 0.95rem; padding: 0.4rem 0.8rem;">{{ item }}</span>
+                            {% endfor %}
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    {% else %}
+                        (No answer provided)
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% empty %}
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> No form data available
+        </div>
+    {% endfor %}
+
+    <!-- Footer -->
+    <div class="text-center mt-4 mb-5">
+        <a href="{% url 'view-submissions' %}" class="btn btn-primary">
+            <i class="bi bi-list-ul"></i> View All Responses
+        </a>
+    </div>
+</div>
+{% endblock %}
